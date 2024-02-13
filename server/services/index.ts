@@ -1,6 +1,12 @@
 import { Strapi } from "@strapi/strapi";
+import { Model } from "@strapi/database/dist/types";
 
-const locationServices = ({ strapi }: { strapi: Strapi }) => ({
+export interface LocationServices {
+  getLocationFields: (modelAttributes: any) => (string | boolean)[];
+  getModelsWithLocation: () => (Model | boolean)[]
+}
+
+const locationServices: ({ strapi }: { strapi: Strapi }) => LocationServices = ({ strapi }: { strapi: Strapi }) => ({
   getLocationFields: (modelAttributes: any) => {
     return Object.entries(modelAttributes)
       .map(([key, value]) => {
@@ -46,6 +52,7 @@ const locationServices = ({ strapi }: { strapi: Strapi }) => ({
       .filter(Boolean);
   },
 });
+
 export default {
   locationServices,
 };

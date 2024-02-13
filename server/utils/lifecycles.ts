@@ -1,26 +1,24 @@
 import { Strapi } from "@strapi/strapi";
-import { Event } from "@strapi/database/lib/lifecycles";
-import { Subscriber } from "@strapi/database/lib/lifecycles/subscribers";
 import _ from "lodash";
+import type { Subscriber, Event } from "@strapi/database/dist/lifecycles/types";
 
-const locaitonServiceUid = "plugin::location-plugin.locationServices";
+const locationServiceUid = "plugin::location-plugin.locationServices";
 
 const createSubscriber = (strapi: Strapi): Subscriber => {
   const db = strapi.db.connection;
   const modelsWithLocation =
-    strapi.services[locaitonServiceUid].getModelsWithLocation();
+    strapi.services[locationServiceUid].getModelsWithLocation();
 
   return {
-    // @ts-expect-error
-    model: modelsWithLocation.map((model) => model.uid),
+    models: modelsWithLocation.map((model) => model.uid),
 
     afterCreate: async (event: Event) => {
       const { model } = event;
       const locationFields = strapi.services[
-        locaitonServiceUid
+        locationServiceUid
       ].getLocationFields(model.attributes);
-      // @ts-expect-error
-      const id = event?.result?.id;
+
+      const id = event?.state?.id;
       if (!id) return;
 
       await Promise.all(
@@ -42,7 +40,7 @@ const createSubscriber = (strapi: Strapi): Subscriber => {
     afterUpdate: async (event: Event) => {
       const { model, params } = event;
       const locationFields = strapi.services[
-        locaitonServiceUid
+        locationServiceUid
       ].getLocationFields(model.attributes);
 
       await Promise.all(

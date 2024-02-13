@@ -52,7 +52,7 @@ export default async ({ strapi }: { strapi: Strapi }) => {
   );
 
   const subscriber = createSubscriber(strapi);
-  //@ts-ignore
+
   strapi.db.lifecycles.subscribe(subscriber);
 
   const middleware = createFilterMiddleware(strapi);

@@ -17,18 +17,18 @@
     "allowJs": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "noImplicitAny": false,
+    "noImplicitAny": false
   },
-
-  "include": [    "./server/**/*",
-  "./admin/**/*",
-  "./types/**/*",
-  "./strapi-server.*",
-  "./strapi-admin.*",
-   "custom.d.ts",
-  "./admin/**/*",
-  "./setup-package.ts",],
-
+  "include": [
+    "./server/**/*",
+    "./admin/**/*",
+    "./types/**/*",
+    "./strapi-server.*",
+    "./strapi-admin.*",
+    "custom.d.ts",
+    "./admin/**/*",
+    "./setup-package.ts"
+  ],
   "exclude": [
     "**/node_modules/**/*",
     "**/build/**/*",
